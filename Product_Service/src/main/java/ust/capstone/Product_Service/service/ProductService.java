@@ -40,15 +40,21 @@ public class ProductService {
     }
 
     // Update product stock quantity
-    public Product updateProductStock(String id, int quantity) {
-        Product product = getProductById(id);
-        if (product.getStockQuantity() >= quantity) {
-            product.setStockQuantity(product.getStockQuantity() - quantity);
-            return productRepository.save(product);
-        } else {
-            throw new RuntimeException("Insufficient stock");
+    public Product updateProductStock(String productId, int quantity) {
+        Product product = getProductById(productId);
+
+        // Check if sufficient stock is available
+        if (product.getStockQuantity() < quantity) {
+            throw new RuntimeException("Insufficient stock for product ID: " + productId);
         }
+
+        // Update the stock by subtracting the quantity ordered
+        product.setStockQuantity(product.getStockQuantity() - quantity);
+
+        // Save the updated product back to the database
+        return productRepository.save(product);
     }
+
 
     // Update an existing product
     public Product updateProduct(String id, Product productDetails) {

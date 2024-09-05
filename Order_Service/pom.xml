@@ -27,6 +27,7 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 
+		<!-- Spring Cloud OpenFeign -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -51,11 +52,11 @@
 		</dependency>
 
 		<!-- Lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok</artifactId>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 
 		<!-- Spring Boot Test Starter -->
 		<dependency>
@@ -64,12 +65,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Spring Boot Starter Mail -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-
-
 
 		<!-- Spring Security Test -->
 		<dependency>
@@ -77,10 +77,19 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- SpringDoc OpenAPI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version>
+		</dependency>
+
+		<!-- Razorpay Java SDK -->
+		<dependency>
+			<groupId>com.razorpay</groupId>
+			<artifactId>razorpay-java</artifactId>
+			<version>1.4.0</version> <!-- Updated to a more stable version -->
 		</dependency>
 	</dependencies>
 

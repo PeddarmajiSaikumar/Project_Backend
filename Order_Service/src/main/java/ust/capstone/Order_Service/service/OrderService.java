@@ -42,6 +42,7 @@ public class OrderService {
 
         // Save the Order first to generate the orderId
         order = orderRepository.save(order);
+        System.out.println("Order created with ID: " + order.getId());
 
         double totalAmount = 0.0;
         Set<String> vendorIds = new HashSet<>();
@@ -49,6 +50,8 @@ public class OrderService {
         // Fetch product details, check stock, and update order items
         for (OrderItem item : order.getOrderItems()) {
             Map<String, Object> product = productClient.getProductById(item.getProductId());
+            System.out.println("Fetched product details for product ID: " + item.getProductId());
+
             int stockQuantity = (int) product.get("stockQuantity");
             double price = (double) product.get("price");
             String productName = (String) product.get("name");
@@ -58,25 +61,41 @@ public class OrderService {
                 throw new IllegalStateException("Insufficient stock for product: " + productName);
             }
 
+            // Set product details to the order item
             item.setPrice(price);
             item.setProductName(productName);
             item.setOrderId(order.getId());
             item.setVendorId(vendorId);
+
+            // Save the order item
             orderItemRepository.save(item);
+
+            // Update stock in the product inventory
+            productClient.updateProductStock(item.getProductId(), item.getQuantity());
+
+            // Update the total amount of the order
             totalAmount += price * item.getQuantity();
 
-            productClient.updateProductStock(item.getProductId(), stockQuantity - item.getQuantity());
+            // Collect vendor IDs for this order
             vendorIds.add(vendorId);
         }
 
+        // Update the order with the total amount and vendor IDs
         order.setTotalAmount(totalAmount);
         order.setVendorIds(new ArrayList<>(vendorIds));
+
+        // Save the updated order
         order = orderRepository.save(order);
 
+        System.out.println("Order updated with total amount: " + totalAmount);
+
+        // Send email notification
         sendEmailNotification(order);
 
         return order;
     }
+
+
 
     private void sendEmailNotification(Order order) {
         String userEmail = userClient.getUserEmailById(order.getUserId());
@@ -149,5 +168,9 @@ public class OrderService {
         } else {
             return false;
         }
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 }

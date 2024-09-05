@@ -68,4 +68,8 @@ public class OrderItemController {
             return ResponseEntity.status(404).body("Order item not found with id: " + id);
         }
     }
+    @GetMapping
+    public List<OrderItem> getAllOrderItems() {
+        return orderItemService.getAllOrderItems();
+    }
 }

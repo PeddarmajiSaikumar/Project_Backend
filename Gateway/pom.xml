@@ -20,6 +20,8 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -31,6 +33,11 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.razorpay</groupId>
+			<artifactId>razorpay-java</artifactId>
+			<version>1.3.6</version>
+		</dependency>
 		<!-- Spring Cloud Gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

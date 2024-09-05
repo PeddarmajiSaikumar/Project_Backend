@@ -53,5 +53,7 @@ public class OrderItemService {
     }
 
 
-
+    public List<OrderItem> getAllOrderItems() {
+        return orderItemRepository.findAll();
+    }
 }
